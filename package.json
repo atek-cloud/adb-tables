@@ -20,5 +20,8 @@
   "homepage": "https://github.com/atek-cloud/adb-tables#readme",
   "devDependencies": {
     "typescript": "^4.4.2"
+  },
+  "dependencies": {
+    "@atek-cloud/adb-api": "^1.0.0"
   }
 }
