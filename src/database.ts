@@ -11,7 +11,6 @@ export interface Database {
   }
   services?: DatabaseServiceConfig[]
   createdBy?: {
-    accountId?: string
     serviceKey?: string
   }
   createdAt: string
@@ -92,9 +91,6 @@ export const DATABASE = {
       'createdBy': {
         'type': 'object',
         'properties': {
-          'accountId': {
-            'type': 'string'
-          },
           'serviceKey': {
             'type': 'string'
           }

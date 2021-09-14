@@ -1,14 +1,15 @@
 import { defineTable } from '@atek-cloud/adb-api'
 
-export const ACCOUNT = {
-  ID: "atek.cloud/account",
+export const USER = {
+  ID: "atek.cloud/user",
   REVISION: 1,
   DEFINITION: {
     "$schema": "http://json-schema.org/draft-07/schema#",
     "type": "object",
     "properties": {
       "username": {
-        "type": "string"
+        "type": "string",
+        "minLength": 3
       },
       "hashedPassword": {
         "type": "string"
@@ -19,23 +20,21 @@ export const ACCOUNT = {
     },
     "required": [
       "username",
-      "hashedPassword",
-      "role"
+      "hashedPassword"
     ]
   },
   TEMPLATES: {
     "table": {
-      "title": "Accounts",
-      "description": "Internal records of user account registrations."
+      "title": "Atek Users",
+      "description": "Users registered on this Atek server."
     },
     "record": {
-      "key": "{{/username}}",
-      "title": "System account: {{/username}}"
+      "title": "{{/username}}"
     }
   }
 }
 
-export interface Account {
+export interface User {
   username: string;
   hashedPassword: string;
   role: Role;
@@ -46,8 +45,8 @@ export enum Role {
   admin = 'admin'
 }
 
-export const accounts = defineTable<Account>(ACCOUNT.ID, {
-  revision: ACCOUNT.REVISION,
-  templates: ACCOUNT.TEMPLATES,
-  definition: ACCOUNT.DEFINITION
+export const users = defineTable<User>(USER.ID, {
+  revision: USER.REVISION,
+  templates: USER.TEMPLATES,
+  definition: USER.DEFINITION
 })

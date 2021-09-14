@@ -10,8 +10,8 @@ export const SERVICE = {
       "id": {
         "type": "string"
       },
-      "port": {
-        "type": "number"
+      "owningUserKey": {
+        "type": "string"
       },
       "sourceUrl": {
         "type": "string",
@@ -42,17 +42,13 @@ export const SERVICE = {
       },
       "config": {
         "$ref": "#/definitions/ServiceConfig"
-      },
-      "installedBy": {
-        "type": "string"
       }
     },
     "required": [
       "id",
-      "port",
+      "owningUserKey",
       "sourceUrl",
-      "package",
-      "installedBy"
+      "package"
     ],
     "definitions": {
       "ServiceManifest": {
@@ -116,7 +112,7 @@ export const SERVICE = {
 
 export interface Service {
   id: string;
-  port: number;
+  owningUserKey: string;
   sourceUrl: string;
   desiredVersion?: string;
   package: {
@@ -126,7 +122,6 @@ export interface Service {
     };
   manifest?: ServiceManifest;
   config?: ServiceConfig;
-  installedBy: string;
 }
 
 export interface ServiceManifest {
