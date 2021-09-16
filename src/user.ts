@@ -16,6 +16,12 @@ export const USER = {
       },
       "role": {
         "type": "string"
+      },
+      "settings": {
+        "type": "object",
+        "properties": {
+          "mainServiceId": {"type": "string"}
+        }
       }
     },
     "required": [
@@ -38,11 +44,16 @@ export interface User {
   username: string;
   hashedPassword: string;
   role: Role;
+  settings: UserSettings;
 }
 
 export enum Role {
   none = '',
   admin = 'admin'
+}
+
+export interface UserSettings {
+  mainServiceId: string
 }
 
 export const users = defineTable<User>(USER.ID, {
