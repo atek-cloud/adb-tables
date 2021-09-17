@@ -2,6 +2,7 @@ import { defineTable } from '@atek-cloud/adb-api'
 
 export interface Database {
   dbId: string
+  owningUserKey?: string
   cachedMeta?: {
     displayName?: string
     writable?: boolean
@@ -47,6 +48,9 @@ export const DATABASE = {
     'properties': {
       'dbId': {
         'type': 'string'
+      },
+      'owningUserKey': {
+        "type": "string"
       },
       'cachedMeta': {
         'type': 'object',
