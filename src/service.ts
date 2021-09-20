@@ -66,30 +66,30 @@ export const SERVICE = {
           "license": {
             "type": "string"
           },
+          "frame": {
+            "type": "boolean"
+          },
           "exports": {
             "type": "array",
             "items": {
-              "$ref": "#/definitions/ApiExportDesc"
+              "type": "object",
+              "properties": {
+                "api": {
+                  "type": "string"
+                },
+                "path": {
+                  "type": "string"
+                },
+                "transport": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "api"
+              ]
             }
           }
         }
-      },
-      "ApiExportDesc": {
-        "type": "object",
-        "properties": {
-          "api": {
-            "type": "string"
-          },
-          "path": {
-            "type": "string"
-          },
-          "transport": {
-            "type": "string"
-          }
-        },
-        "required": [
-          "api"
-        ]
       },
       "ServiceConfig": {
         "type": "object",
@@ -129,6 +129,7 @@ export interface ServiceManifest {
   description?: string;
   author?: string;
   license?: string;
+  frame?: boolean;
   exports?: ApiExportDesc[];
 }
 
