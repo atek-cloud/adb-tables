@@ -1,47 +1,27 @@
-import { defineTable } from '@atek-cloud/adb-api'
+import { defineSchema } from '@atek-cloud/adb-api'
 
 export interface Database {
   dbId: string
-  owningUserKey?: string
-  cachedMeta?: {
-    displayName?: string
-    writable?: boolean
-  }
-  network?: {
-    access?: DatabaseNetworkAccess
-  }
-  services?: DatabaseServiceConfig[]
-  createdBy?: {
+  owner?: {
+    userKey?: string
     serviceKey?: string
   }
+  cachedMeta?: {
+    writable?: boolean
+  }
+  access?: DatabaseAccess
+  alias?: string
   createdAt: string
 }
 
-export interface DatabaseServiceConfig {
-  serviceKey: string
-  alias?: string
-  persist?: boolean
-  presync?: boolean
-}
-
-export enum DatabaseNetworkAccess {
+export enum DatabaseAccess {
   private = 'private',
   public = 'public'
 }
 
 export const DATABASE = {
   ID: 'atek.cloud/database',
-  REVISION: 1,
-  TEMPLATES: {
-    table: {
-      title: 'Databases',
-      description: 'Settings and cached state for databases.'
-    },
-    record: {
-      key: '{{/dbId}}',
-      title: 'Database ID: {{/dbId}}'
-    }
-  },
+  PKEY: '/dbId',
   DEFINITION: {
     '$schema': 'http://json-schema.org/draft-07/schema#',
     'type': 'object',
@@ -49,57 +29,29 @@ export const DATABASE = {
       'dbId': {
         'type': 'string'
       },
-      'owningUserKey': {
-        "type": "string"
+      'owner': {
+        'type': 'object',
+        'properties': {
+          'userKey': {
+            "type": "string"
+          },
+          'serviceKey': {
+            "type": "string"
+          }
+        }
       },
       'cachedMeta': {
         'type': 'object',
         'properties': {
-          'displayName': {
-            'type': 'string'
-          },
           'writable': {
             'type': 'boolean'
           }
         }
       },
-      'network': {
-        'type': 'object',
-        'properties': {
-          'access': {'type': 'string'}
-        }
+      'access': {
+        'type': 'string'
       },
-      'services': {
-        'type': 'array',
-        'items': {
-          'type': 'object',
-          'properties': {
-            'serviceKey': {
-              'type': 'string'
-            },
-            'alias': {
-              'type': 'string'
-            },
-            'persist': {
-              'type': 'boolean'
-            },
-            'presync': {
-              'type': 'boolean'
-            }
-          },
-          'required': [
-            'serviceKey'
-          ]
-        }
-      },
-      'createdBy': {
-        'type': 'object',
-        'properties': {
-          'serviceKey': {
-            'type': 'string'
-          }
-        }
-      },
+      'alias': {'type': 'string'},
       'createdAt': {
         'type': 'string',
         'format': 'date-time'
@@ -112,8 +64,7 @@ export const DATABASE = {
   }
 }
 
-export const databases = defineTable<Database>(DATABASE.ID, {
-  revision: DATABASE.REVISION,
-  templates: DATABASE.TEMPLATES,
-  definition: DATABASE.DEFINITION
+export const databases = defineSchema<Database>(DATABASE.ID, {
+  pkey: DATABASE.PKEY,
+  jsonSchema: DATABASE.DEFINITION
 })

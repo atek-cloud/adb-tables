@@ -1,8 +1,7 @@
-import { defineTable } from '@atek-cloud/adb-api'
+import { defineSchema } from '@atek-cloud/adb-api'
 
 export const SERVICE = {
   ID: "atek.cloud/service",
-  REVISION: 1,
   DEFINITION: {
     "$schema": "http://json-schema.org/draft-07/schema#",
     "type": "object",
@@ -98,15 +97,6 @@ export const SERVICE = {
         }
       }
     }
-  },
-  TEMPLATES: {
-    "table": {
-      "title": "Services",
-      "description": "Services installed to the host environment."
-    },
-    "record": {
-      "title": "Service \"{{/id}}\", source: {{/sourceUrl}}"
-    }
   }
 }
 
@@ -153,8 +143,6 @@ export enum ApiTransportEnum {
   proxy = 'proxy'
 }
 
-export const services = defineTable<Service>(SERVICE.ID, {
-  revision: SERVICE.REVISION,
-  templates: SERVICE.TEMPLATES,
-  definition: SERVICE.DEFINITION
+export const services = defineSchema<Service>(SERVICE.ID, {
+  jsonSchema: SERVICE.DEFINITION
 })

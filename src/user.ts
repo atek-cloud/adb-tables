@@ -1,8 +1,7 @@
-import { defineTable } from '@atek-cloud/adb-api'
+import { defineSchema } from '@atek-cloud/adb-api'
 
 export const USER = {
   ID: "atek.cloud/user",
-  REVISION: 1,
   DEFINITION: {
     "$schema": "http://json-schema.org/draft-07/schema#",
     "type": "object",
@@ -28,15 +27,6 @@ export const USER = {
       "username",
       "hashedPassword"
     ]
-  },
-  TEMPLATES: {
-    "table": {
-      "title": "Atek Users",
-      "description": "Users registered on this Atek server."
-    },
-    "record": {
-      "title": "{{/username}}"
-    }
   }
 }
 
@@ -56,8 +46,6 @@ export interface UserSettings {
   mainServiceId: string
 }
 
-export const users = defineTable<User>(USER.ID, {
-  revision: USER.REVISION,
-  templates: USER.TEMPLATES,
-  definition: USER.DEFINITION
+export const users = defineSchema<User>(USER.ID, {
+  jsonSchema: USER.DEFINITION
 })

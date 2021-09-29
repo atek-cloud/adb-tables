@@ -1,8 +1,8 @@
-import { defineTable } from '@atek-cloud/adb-api'
+import { defineSchema } from '@atek-cloud/adb-api'
 
 export const USER_SESSION = {
   ID: 'atek.cloud/user-session',
-  REVISION: 1,
+  PKEY: '/sessionId',
   DEFINITION: {
     "$schema": "http://json-schema.org/draft-07/schema#",
     "type": "object",
@@ -27,16 +27,6 @@ export const USER_SESSION = {
       "username",
       "createdAt"
     ]
-  },
-  TEMPLATES: {
-    "table": {
-      "title": "Atek User Sessions",
-      "description": "Login sessions for users on this Atek server."
-    },
-    "record": {
-      "key": "{{/sessionId}}",
-      "title": "Session for {{/username}} (key={{/userKey}}) created at {{/createdAt}}"
-    }
   }
 }
 
@@ -47,8 +37,7 @@ export interface UserSession {
   createdAt: string;
 }
 
-export const userSessions = defineTable<UserSession>(USER_SESSION.ID, {
-  revision: USER_SESSION.REVISION,
-  templates: USER_SESSION.TEMPLATES,
-  definition: USER_SESSION.DEFINITION
+export const userSessions = defineSchema<UserSession>(USER_SESSION.ID, {
+  pkey: USER_SESSION.PKEY,
+  jsonSchema: USER_SESSION.DEFINITION
 })
